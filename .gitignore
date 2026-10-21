@@ -1,0 +1,22 @@
+# Contrasena de la base de datos (NO subir a GitHub)
+src/main/resources/conexion.properties
+
+# Maven
+target/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# NetBeans
+nbproject/private/
+nbactions.xml
+
+# Sistema operativo
+.DS_Store
+Thumbs.db

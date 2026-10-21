@@ -1,0 +1,67 @@
+# Construye el programa y lo publica en "Releases" de GitHub.
+# Se ejecuta automaticamente cada vez que se sube una etiqueta que empieza por "v"
+# (por ejemplo: git tag v1.0  y  git push origin v1.0).
+#
+# Publica dos archivos:
+#  - SistemaGestionProductos-Windows.zip : carpeta con SistemaGestionProductos.exe
+#                                          (incluye Java, no requiere instalar nada)
+#  - SistemaGestionProductos.jar         : requiere tener Java 17 o superior instalado
+
+name: Publicar ejecutable
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  construir-y-publicar:
+    runs-on: windows-latest
+
+    steps:
+      - name: Descargar el codigo
+        uses: actions/checkout@v4
+
+      - name: Instalar Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      # La contrasena NO esta en el codigo: se toma del secreto DB_PASSWORD
+      # (Settings > Secrets and variables > Actions) y se guarda en el programa.
+      - name: Crear archivo de contrasena desde el secreto
+        shell: pwsh
+        env:
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: |
+          if (-not $env:DB_PASSWORD) { Write-Error "Falta el secreto DB_PASSWORD en el repositorio"; exit 1 }
+          "db.password=$env:DB_PASSWORD" | Set-Content -Encoding ascii src/main/resources/conexion.properties
+
+      - name: Compilar y generar el JAR ejecutable
+        run: mvn -B clean package
+
+      - name: Crear el .exe con Java incluido
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path entrada | Out-Null
+          Copy-Item target/SistemaGestionProductos.jar entrada/
+          jpackage --type app-image `
+            --name SistemaGestionProductos `
+            --input entrada `
+            --main-jar SistemaGestionProductos.jar `
+            --main-class com.umb.productos.Main `
+            --add-modules java.se,jdk.crypto.ec,jdk.crypto.cryptoki,jdk.charsets,jdk.localedata `
+            --dest salida
+          Compress-Archive -Path salida/SistemaGestionProductos -DestinationPath SistemaGestionProductos-Windows.zip
+
+      - name: Publicar en Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            SistemaGestionProductos-Windows.zip
+            target/SistemaGestionProductos.jar

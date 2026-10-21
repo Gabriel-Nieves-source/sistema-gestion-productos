@@ -1,0 +1,99 @@
+@startuml DiagramaClases
+' Sistema de Gestion de Productos - Diagrama de clases
+' Representa exactamente las clases del proyecto.
+
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+hide empty members
+
+package "com.umb.productos" {
+  class Main {
+    + {static} main(args : String[]) : void
+  }
+}
+
+package "com.umb.productos.modelo" {
+  class Producto {
+    - id : int
+    - codigo : String
+    - nombre : String
+    - descripcion : String
+    - precio : double
+    - cantidad : int
+    + Producto()
+    + Producto(codigo : String, nombre : String, descripcion : String, precio : double, cantidad : int)
+    + Producto(id : int, codigo : String, nombre : String, descripcion : String, precio : double, cantidad : int)
+    + getId() : int
+    + setId(id : int) : void
+    + getCodigo() : String
+    + setCodigo(codigo : String) : void
+    + getNombre() : String
+    + setNombre(nombre : String) : void
+    + getDescripcion() : String
+    + setDescripcion(descripcion : String) : void
+    + getPrecio() : double
+    + setPrecio(precio : double) : void
+    + getCantidad() : int
+    + setCantidad(cantidad : int) : void
+    + toString() : String
+  }
+}
+
+package "com.umb.productos.conexion" {
+  class ConexionBD {
+    - {static} HOST : String
+    - {static} PUERTO : String
+    - {static} BASE_DATOS : String
+    - {static} USUARIO : String
+    - {static} CONTRASENA : String
+    - {static} URL : String
+    - ConexionBD()
+    + {static} obtenerConexion() : Connection
+  }
+}
+
+package "com.umb.productos.dao" {
+  class ProductoDAO {
+    + registrar(producto : Producto) : void
+    + listarTodos() : List<Producto>
+    + buscarPorCodigo(codigo : String) : Producto
+    + buscarPorNombre(nombre : String) : List<Producto>
+    + actualizar(producto : Producto) : boolean
+    + eliminar(codigo : String) : boolean
+    - crearProducto(rs : ResultSet) : Producto
+  }
+}
+
+package "com.umb.productos.vista" {
+  class ProductoFrame {
+    - productoDAO : ProductoDAO
+    - txtCodigo : JTextField
+    - txtNombre : JTextField
+    - txtDescripcion : JTextField
+    - txtPrecio : JTextField
+    - txtCantidad : JTextField
+    - modeloTabla : DefaultTableModel
+    - tablaProductos : JTable
+    + ProductoFrame()
+    + cargarTabla() : void
+    - registrarProducto() : void
+    - buscarProducto() : void
+    - actualizarProducto() : void
+    - eliminarProducto() : void
+    - limpiarCampos() : void
+    - leerPrecio() : Double
+    - leerCantidad() : Integer
+    - mostrarErrorBD(ex : SQLException) : void
+  }
+}
+
+class JFrame <<javax.swing>>
+
+ProductoFrame --|> JFrame
+Main ..> ProductoFrame : crea
+ProductoFrame --> "1" ProductoDAO : usa
+ProductoFrame ..> Producto : crea / muestra
+ProductoDAO ..> ConexionBD : obtiene conexión
+ProductoDAO ..> Producto : guarda / construye
+
+@enduml

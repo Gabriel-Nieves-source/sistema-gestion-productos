@@ -1,0 +1,5 @@
+# Plantilla del archivo de contrasena.
+# 1. Copie este archivo en la misma carpeta con el nombre: conexion.properties
+# 2. Escriba la contrasena de MySQL despues del signo =
+# El archivo conexion.properties NO se sube a GitHub (esta en .gitignore).
+db.password=ESCRIBA_AQUI_LA_CONTRASENA
