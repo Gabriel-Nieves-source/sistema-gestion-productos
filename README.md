@@ -8,7 +8,7 @@ Proyecto académico – Taller de persistencia de datos en Java.
 
 ## ▶ Ejecutar con un clic (sin instalar nada)
 
-1. Ir a **Releases**: [PEGAR AQUÍ URL DE LA RELEASE]
+1. Ir a **Releases**: https://github.com/Gabriel-Nieves-source/sistema-gestion-productos/releases/latest
 2. Descargar `SistemaGestionProductos-Windows.zip` y descomprimirlo.
 3. Doble clic en `SistemaGestionProductos.exe`.
    Si Windows muestra *"Windows protegió su PC"* → **Más información → Ejecutar de todas formas**.
@@ -36,7 +36,7 @@ El ejecutable incluye Java y se conecta a una base de datos MySQL en la nube, po
 ## Instalación
 
 ```bash
-git clone [PEGAR AQUÍ URL DEL REPOSITORIO]
+git clone https://github.com/Gabriel-Nieves-source/sistema-gestion-productos
 cd sistema-gestion-productos
 ```
 

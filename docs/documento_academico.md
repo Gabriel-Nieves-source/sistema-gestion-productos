@@ -426,7 +426,7 @@ Para que la aplicación pueda ejecutarse sin instalar herramientas de desarrollo
 
 **Instrucciones para ejecutar:**
 
-1. Abrir el enlace de descarga: [PEGAR AQUÍ URL DE LA RELEASE]
+1. Abrir el enlace de descarga: https://github.com/Gabriel-Nieves-source/sistema-gestion-productos/releases/latest
 2. Descargar `SistemaGestionProductos-Windows.zip` y descomprimirlo.
 3. Hacer doble clic en `SistemaGestionProductos.exe`. Si Windows muestra "Windows protegió su PC", elegir **Más información → Ejecutar de todas formas** (el aviso aparece porque el programa no tiene firma digital comercial).
 
@@ -434,7 +434,7 @@ Alternativa: descargar `SistemaGestionProductos.jar` y abrirlo con doble clic (r
 
 # Enlace al repositorio de GitHub
 
-[PEGAR AQUÍ URL DEL REPOSITORIO]
+https://github.com/Gabriel-Nieves-source/sistema-gestion-productos
 
 # Enlace al video
 
